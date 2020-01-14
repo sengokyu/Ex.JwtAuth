@@ -6,7 +6,13 @@
 dotnet test ExJwtAuth.Tests
 ```
 
-## Requirements
+## Pre-requirements
 
 * DotNet SDK 2.2
+
+## Require packages
+
+* Microsoft.AspNetCore.Authentication
+* Microsoft.AspNetCore.Authentication.JwtBearer
+* Microsoft.AspNetCore.Mvc
 
