@@ -13,7 +13,6 @@ namespace ExJwtAuth.Configuratins
         public static SymmetricSecurityKey SecurityKey { get; }
             = new SymmetricSecurityKey(secret);
 
-        public static string Audience { get; } = "http://localhost:5000";
         public static string Issuer { get; } = "ExJwtAuth";
     }
 }

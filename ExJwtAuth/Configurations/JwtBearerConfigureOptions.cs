@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +16,7 @@ namespace ExJwtAuth.Configuratins
 
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidAudience = JwtSecurityConfiguration.Audience,
+                AudienceValidator = this.AudienceValidatorDelegate,
                 ValidIssuer = JwtSecurityConfiguration.Issuer,
                 IssuerSigningKey = JwtSecurityConfiguration.SecurityKey,
                 ValidateAudience = true,
@@ -27,6 +28,11 @@ namespace ExJwtAuth.Configuratins
         public void Configure(JwtBearerOptions options)
         {
             Configure(JwtBearerDefaults.AuthenticationScheme, options);
+        }
+
+        public bool AudienceValidatorDelegate(IEnumerable<string> audiences, SecurityToken securityToken, TokenValidationParameters validationParameters)
+        {
+            return true;
         }
     }
 }
