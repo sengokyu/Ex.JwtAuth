@@ -91,6 +91,26 @@ namespace ExJwtAuth
             }
         }
 
+        [Fact]
+        public async Task Test適当なJWTでは401が返る()
+        {
+            // Given
+            var uri = "/";
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+            var authenticationHeader = new AuthenticationHeaderValue(
+                "Bearer", token
+            );
+
+            using (var client = factory.CreateClient())
+            {
+                // When
+                var response = await client.GetAsync(uri);
+
+                // Then
+                response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+            }
+        }
+
         private async Task<string> Login(string username)
         {
             var uri = "/";
