@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ExJwtAuth
@@ -21,19 +22,12 @@ namespace ExJwtAuth
         {
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters =
-                        new TokenValidationParameters
-                        {
-                            IssuerSigningKey = JwtSecurityConfiguration.SecurityKey,
-                            ValidateAudience = false,
-                            ValidateIssuer = false,
-                        };
-                });
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, configureOptions: null);
             services
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddSingleton<IConfigureOptions<JwtBearerOptions>, JwtBearerConfigureOptions>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

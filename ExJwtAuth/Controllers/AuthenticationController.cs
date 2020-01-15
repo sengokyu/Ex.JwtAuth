@@ -42,6 +42,8 @@ namespace ExJwtAuth.Controllers
                 JwtSecurityConfiguration.SecurityKey,
                 SecurityAlgorithms.HmacSha256);
             var token = handler.CreateJwtSecurityToken(
+                audience: JwtSecurityConfiguration.Audience,
+                issuer: JwtSecurityConfiguration.Issuer,
                 subject: subject,
                 signingCredentials: credentials);
             var tokenText = handler.WriteToken(token);
