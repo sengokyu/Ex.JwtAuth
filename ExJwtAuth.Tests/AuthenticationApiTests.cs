@@ -104,6 +104,7 @@ namespace ExJwtAuth
             using (var client = factory.CreateClient())
             {
                 // When
+                client.DefaultRequestHeaders.Authorization = authenticationHeader;
                 var response = await client.GetAsync(uri);
 
                 // Then
